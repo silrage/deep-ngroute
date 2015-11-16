@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo ngRouting by HTML5</title>
+  <base href="/cdeep/">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<div ng-app="app">
+
+    <div ng-include="'header.html'" id="header"></div>
+
+    <div class="main" id="main-no-space">
+        <div id="main-page">
+            <div id="wrapper" class="container">
+                <div class="container">
+                    <div>
+                        <div ng-if="hasSidebar" ng-include="'sidebar.html'" id="sidebar"></div>
+                        <div ng-view id="main">loading... </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div ng-include="'footer.html'" id="footer"></div>
+    </div>
+
+    <script src="angular.min.js"></script>
+    <script src="angular-route.min.js"></script>
+    <script src="app.js"></script>
+    <script type="text/ng-template" id="home.html">
+        <h3>Hello world!</h3>
+        <i>This is demo ngRoute page</i>
+    </script>
+    <script type="text/ng-template" id="header1.html">
+        header menu 1 content - no side bar
+    </script>
+    <script type="text/ng-template" id="header2.html">
+        header menu 2 content - no side bar
+    </script>
+    <script type="text/ng-template" id="sidebarlink1.html">
+        <div id="content">
+          sidebar link 1 content - including sidebar
+        </div>
+    </script>
+    <script type="text/ng-template" id="sidebarlink2.html">
+        <div id="content">
+          sidebar link 2 content - including sidebar
+        </div>
+    </script>
+    <script type="text/ng-template" id="sidebarlink3.html">
+        <div id="content">
+          sidebar link 3 content - including sidebar
+          <br>
+          <h3><a href="/cdeep/">HOME</a></h3>
+        </div>
+    </script>
+    <script type="text/ng-template" id="dashboard.html">
+        <div id="content">dashboard</div>
+    </script>
+    <script type="text/ng-template" id="header.html">
+        header
+        <br>
+        <a ng-href="header1">Header menu 1</a>
+        <a ng-href="header2">Header menu 2</a>
+        <a ng-href="dashboard">Dashboard</a>
+    </script>
+     <script type="text/ng-template" id="sidebar.html">
+         sidebar<br/>
+         <a ng-href="sidebar1">Link 1</a><br/>
+         <a ng-href="sidebar2">Link 2</a><br/>
+         <a ng-href="sidebar2/link">Link 2.1</a>
+    </script>
+    <script type="text/ng-template" id="footer.html">
+        footer
+    </script>
+
+</div>
+</body>
+</html>
