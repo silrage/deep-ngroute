@@ -20,11 +20,28 @@
     float: left;
     width: 20%;
 }
+.menu-top a {
+    padding-right: 10px;
+}
+.menu-top a:after {
+    content: "  |";
+    position: relative;
+}
+.menu-top a:last-child:after {
+    content: "";
+}
+.menu-left a {
+    float: left;
+}
 #content {
     padding: 20px;
     border: 1px solid #000;
     float: right;
     width: 78%;
+}
+.box {
+    padding: 20px;
+    float: left;
 }
 #footer {
     padding: 20px;

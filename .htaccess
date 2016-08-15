@@ -1,7 +1,8 @@
 # Rewrite for ngRoute
 RewriteEngine On
-RewriteBase   /
-RewriteCond     %{REQUEST_URI} !^(/index\.php|/img|/js|/css|/robots\.txt|/favicon\.ico)
-RewriteCond     %{REQUEST_FILENAME} !-f
-RewriteCond     %{REQUEST_FILENAME} !-d
-RewriteRule     .               /cdeep/index.html              [L]
+	RewriteBase   /
+	RewriteCond     %{REQUEST_URI} !^(/index\.php|/img|/js|/css|/robots\.txt|/favicon\.ico)
+#	RewriteCond     %{REQUEST_URI} !^(/cdeep|/img)
+	RewriteCond     %{REQUEST_FILENAME} !-f
+	RewriteCond     %{REQUEST_FILENAME} !-d
+	RewriteRule     .               /cdeep/index.html              [L]
