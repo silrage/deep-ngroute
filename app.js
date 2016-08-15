@@ -1,112 +1,108 @@
-var links = [
-  {
-    name: 'Home',
-    url: '/',
-    controller: DashboardCtrl,
-    template: '<h3>Hello world!</h3><i>This is demo ngRoute page</i>',
-    menu: 'top',
-  },
-  {
-    name: 'Header',
-    url: '/header1',
-    controller: DashboardCtrl,
-    template: '<div class="box">header menu 1 content - no side bar</div>',
-    menu: 'top',
-  },
-  {
-    name: 'Header',
-    url: '/header2',
-    controller: DashboardCtrl,
-    template: '<div class="box">header menu 2 content - no side bar</div>',
-    menu: 'top',
-  },
-  {
-    name: 'Dashboard',
-    url: '/dashboard',
-    controller: DashboardCtrl,
-    template: '<div class="box">dashboard</div>',
-    sidebar: true,
-    menu: 'top',
-  },
-  {
-    name: 'Link with sidebar',
-    url: '/link',
-    controller: DashboardCtrl,
-    template: '<div class="box">Hi, this is a page number two!</div>',
-    sidebar: true,
-    menu: 'left',
-  },
-  {
-    name: 'Link with sidebar in path',
-    url: '/link/path',
-    controller: DashboardCtrl,
-    template: '<div class="box">sidebar link content - including sidebar!</div>',
-    sidebar: true,
-    menu: 'left',
-  },
-  {
-    name: 'Link with hash',
-    url: '#popup',
-    controller: PopupCtrl,
-    template: 'Ooopa!',
-  }
-];
+'use strict';
 
-var app = angular.module('app', ['ngRoute'])
-
+var app = angular.module('app', ['ngRoute']);
+// var links;
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-
     //Parse all menuitems
-    angular.forEach(links, function(link){
-      var rule = {
-        controller: link.controller,
-        template: link.template,
-      };
-      if(link.sidebar) {
-        rule.resolve = {
-          hasSidebar: function($rootScope) {
-            $rootScope.hasSidebar = true;
-            return true; 
+    // links = JSON.parse( angular.element( document.querySelector('#mainMenu') )[0].innerHTML );
+      angular.forEach(links, function(link){
+        var rule = {
+          controller: DashboardCtrl,
+          template: link.template,
+        };
+        if(link.sidebar) {
+          rule.resolve = {
+            hasSidebar: function($rootScope) {
+              $rootScope.hasSidebar = true;
+              return true; 
+            }
+          }
+        }else{
+          rule.resolve = {
+            hasSidebar: function($rootScope) {
+              $rootScope.hasSidebar = false;
+              return false; 
+            }
           }
         }
-      }else{
-        rule.resolve = {
-          hasSidebar: function($rootScope) {
-            $rootScope.hasSidebar = false;
-            return false; 
-          }
-        }
-      }
-      $routeProvider
-        .when(link.url, rule)
-        .otherwise({
-            redirectTo: '/'
-        });
-    });
-    $locationProvider.html5Mode({
-      enabled: true,
-      requireBase: false
-    });
+
+        $routeProvider
+          .when(link.url, rule)
+          .otherwise({
+              redirectTo: '/'
+          });
+      });
+    
+      $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+      });
 }]);
 
+
 app.directive("menuTop", function(){
-  // console.log('init:yes');
   return {
     restrict: 'E',
     template: menuTop_template,
     link: null,
+    controller: getUP
   }
 });
 app.directive("menuLeft", function(){
-  // console.log('init:yes');
   return {
     restrict: 'E',
     template: menuLeft_template,
     link: null,
   }
 });
-
+function getUP($scope, $http, $route) {
+  $scope.AddNewMenuItem = function() {
+    $http({
+      url: 'up.php',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      transformRequest: function(obj) {
+        var str = [];
+        for (var p in obj)
+          str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+        return str.join('&');
+      },
+      method: 'POST',
+      data: {
+        add: true
+      }
+    }).then(function(resp){
+      if(resp.status === 200) {
+        //Update current scope
+        links = resp.data;
+        return window.location.reload();
+      }
+    })
+  }
+  $scope.cleanMenu = function() {
+    $http({
+      url: 'up.php',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      transformRequest: function(obj) {
+        var str = [];
+        for (var p in obj)
+          str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+        return str.join('&');
+      },
+      method: 'POST',
+      data: {
+        clean: true
+      }
+    }).then(function(resp){
+      if(resp.status === 200) {
+        //Update current scope
+        links = resp.data;
+        return window.location.reload();
+      }
+    })
+  }
+}
 function menuTop_template() {
+  //Parse all menuitems
   var out = '<div id="header" class="menu-top"><span class="title">Header</span><br/>';
   angular.forEach(links, function(v){
     //Detect home link
@@ -124,10 +120,11 @@ function menuTop_template() {
       out += '</a>';
     }
   })
-  out += '</div>';
+  out += '<a ng-click="AddNewMenuItem()">+Add</a> <a ng-click="cleanMenu()">-Clean</a></div>';
   return out;
 }
 function menuLeft_template() {
+  //Parse all menuitems
   var out = '<div class="menu-left"><span class="title">Sidebar</span><br/>';
   angular.forEach(links, function(v){
     //Detect home link
@@ -148,9 +145,8 @@ function menuLeft_template() {
   out += '</div>';
   return out;
 }
-function DashboardCtrl() {
-//	You code here..
-  // console.log(links)
+function DashboardCtrl($scope) {
+//  You code here..
 }
 function PopupCtrl() {
   console.log('popup:init');
