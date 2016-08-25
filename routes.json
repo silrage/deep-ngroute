@@ -1,1 +1,42 @@
-{"0":{"name":"Home","url":"\/","controller":"DashboardCtrl","template":"<h3>Hello world!<\/h3><i>This is demo ngRoute page<\/i>","menu":"top"},"1":{"name":"Header","url":"\/header1","controller":"DashboardCtrl","template":"<div class='box'>header menu 1 content - no side bar<\/div>","menu":"top"},"2":{"name":"Header","url":"\/header2","controller":"DashboardCtrl","template":"<div class='box'>header menu 2 content - no side bar<\/div>","menu":"top"},"3":{"name":"Dashboard","url":"\/dashboard","controller":"DashboardCtrl","template":"<div class='box'>dashboard<\/div>","sidebar":"true","menu":"top"},"4":{"name":"Link with sidebar","url":"\/link","controller":"DashboardCtrl","template":"<div class='box'>Hi, this is a page number two!<\/div>","sidebar":"true","menu":"left"},"5":{"name":"Link with sidebar in path","url":"\/link\/path","controller":"DashboardCtrl","template":"<div class='box'>sidebar link content - including sidebar!<\/div>","sidebar":"true","menu":"left"},"6":{"name":"Link with hash","url":"#popup","controller":"PopupCtrl","template":"Ooopa!"}}
+[
+	{
+		"name":"Home",
+		"url":"\/",
+		"template":"<h3>Hello world!<\/h3><i>This is demo ngRoute page<\/i><br\/><a href='https://github.com/v3ctor/deep-ngroute' target='_blank' style='background: #2d6eff;border-radius: 10px;margin-top: 20px;padding: 7px 20px;text-decoration: none;color: white;display: inline-block;'>Open on GitHub<\/a>",
+		"menu":"top"
+	},
+	{
+		"name":"Header",
+		"url":"\/header1",
+		"template":"<div class='box'>header menu 1 content - no side bar<\/div>",
+		"menu":"top"
+	},
+	{
+		"name":"Header",
+		"url":"\/header2",
+		"template":"<div class='box'>header menu 2 content - no side bar<\/div>",
+		"menu":"top"
+	},
+	{
+		"name":"Dashboard",
+		"url":"\/dashboard",
+		"controller":"console.log('dashboard:init')",
+		"template":"<div class='box'>dashboard<\/div>",
+		"sidebar":"true",
+		"menu":"top"
+	},
+	{
+		"name":"Link with sidebar",
+		"url":"\/link",
+		"template":"<div class='box'>Hi, this is a page number two!<\/div>",
+		"sidebar":"true",
+		"menu":"left"
+	},
+	{
+		"name":"Link with sidebar in path",
+		"url":"\/link\/path",
+		"template":"<div class='box'>sidebar link content - including sidebar!<\/div>",
+		"sidebar":"true",
+		"menu":"left"
+	}
+]

@@ -7,9 +7,13 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
     // links = JSON.parse( angular.element( document.querySelector('#mainMenu') )[0].innerHTML );
       angular.forEach(links, function(link){
         var rule = {
-          controller: DashboardCtrl,
           template: link.template,
         };
+        if(link.controller) {
+          rule.controller = function( $scope, $rootScope, $http ) {
+            eval( link.controller );
+          }
+        }
         if(link.sidebar) {
           rule.resolve = {
             hasSidebar: function($rootScope) {
@@ -145,9 +149,6 @@ function menuLeft_template() {
   out += '</div>';
   return out;
 }
-function DashboardCtrl($scope) {
-//  You code here..
-}
-function PopupCtrl() {
-  console.log('popup:init');
-}
+// app.controller("DashboardCtrl", function ($scope) {
+//   console.log('dashboard:init');
+// })
